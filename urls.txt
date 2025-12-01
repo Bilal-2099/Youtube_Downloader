@@ -1,3 +1,0 @@
-playlist = https://www.youtube.com/playlist?list=PLbM35Y5oknIQaCB8rWf4Mipz3iJMtw-V1
-video = https://youtu.be/TsLXaOwFsQA?si=Swmks61foP5ldo1Y
-audio = https://youtu.be/7g3m08stu2E?si=dEnehLXAsRxqMmxZ
