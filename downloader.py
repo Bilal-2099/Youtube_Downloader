@@ -15,7 +15,7 @@ def download_with_ytdlp(url, mode="video"):
         print("Invalid mode. Defaulting to video.")
         mode = "video"
 
-    # Detect playlist
+    
     is_playlist = "playlist" in url or "list=" in url
 
     base_folder = "downloads"
@@ -34,7 +34,7 @@ def download_with_ytdlp(url, mode="video"):
         elif d["status"] == "finished":
             print("\nFinalizing...")
 
-    # FIX: Removed "paths" to stop double folder creation
+    
     common_opts = {
         "outtmpl": os.path.join(folder, "%(title)s.%(ext)s"),
         "noplaylist": False,
@@ -43,7 +43,7 @@ def download_with_ytdlp(url, mode="video"):
         "concurrent_fragment_downloads": 3,
     }
 
-    # AUDIO
+        
     if mode == "audio":
         ydl_opts = {
             **common_opts,
@@ -53,6 +53,7 @@ def download_with_ytdlp(url, mode="video"):
                 "preferredcodec": "mp3",
                 "preferredquality": "192",
             }],
+            "ffmpeg_location": "./ffmpeg/bin",
         }
     # VIDEO
     else:
@@ -60,6 +61,7 @@ def download_with_ytdlp(url, mode="video"):
             **common_opts,
             "format": "bestvideo+bestaudio/best",
             "merge_output_format": "mp4",
+            "ffmpeg_location": "./ffmpeg/bin",
         }
 
     try:
