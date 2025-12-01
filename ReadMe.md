@@ -1,20 +1,20 @@
-# YouTube Downloader (GUI Version)
+# YouTube Downloader (CLI Version)
 
-A Python-based YouTube video and audio downloader with playlist support and a simple graphical interface using Tkinter.  
-This project allows you to download single videos or entire playlists from YouTube in **video (MP4)** or **audio (MP3)** format, with a live progress bar and display of the currently downloading video.
+A simple Python-based YouTube downloader for videos and audio, including full playlist support.  
+This command-line tool allows downloading single videos or entire playlists in **video (MP4)** or **audio (MP3)** format, with live progress and video title display.
 
-Bundled **FFmpeg** ensures the app works without requiring a separate installation.
+Bundled **FFmpeg** ensures the app works on systems without needing a separate installation.
 
 ---
 
 ## Features
 
-- Download **single videos** or **entire playlists**  
-- Choose download format: **Video (MP4)** or **Audio (MP3)**  
-- Tkinter GUI with **progress bar** and current video title display  
-- Clean filenames automatically for Windows  
-- Cross-platform (Python 3.9+ tested on Windows)  
-- Bundled FFmpeg for audio extraction and video merging  
+- Download **single videos** or **entire playlists**
+- Choose download format: **Video (MP4)** or **Audio (MP3)**
+- Shows progress percentage, download speed, and current video title in terminal
+- Clean filenames automatically for Windows
+- Bundled FFmpeg for audio extraction and video merging
+- Simple command-line interface
 
 ---
 
@@ -33,24 +33,22 @@ cd Youtube_downloaer
 pip install yt-dlp
 ```
 
-> **Note:** FFmpeg is already included in the `ffmpeg` folder, so you do not need to install it separately.
+> **Note:** FFmpeg is already included in the `ffmpeg` folder, so no separate installation is needed.
 
 ---
 
 ## Usage
 
-Run the GUI script:
+Run the script:
 
 ```bash
-python youtube_downloader_gui.py
+python downloader.py
 ```
 
 1. Enter the YouTube video or playlist URL.  
 2. Select the download format (`video` or `audio`).  
-3. Click **Download**.  
-4. The progress bar and label will show the download progress and current video name.
-
-The downloaded files are saved in the `downloads` folder:
+3. The terminal will display download progress and the video title.
+4. The downloaded files are saved in the `downloads` folder:
 
 ```
 downloads/
@@ -69,9 +67,9 @@ downloads/
 
 ```
 Enter URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-Select format: Audio
+Enter format: audio
 Downloading audio...
-Progress bar updates...
+45% | 1.2MiB/s | Rick Astley - Never Gonna Give You Up.mp3
 Download complete!
 Saved to: downloads/audio
 ```
@@ -80,9 +78,11 @@ Saved to: downloads/audio
 
 ```
 Enter URL: https://www.youtube.com/playlist?list=PLxxx
-Select format: Video
+Enter format: video
 Downloading playlist...
-Progress bar updates...
+10% | 2.3MiB/s | Video 1.mp4
+25% | 1.8MiB/s | Video 2.mp4
+...
 Download complete!
 Saved to: downloads/playlists/video
 ```
@@ -93,32 +93,29 @@ Saved to: downloads/playlists/video
 
 ```
 Youtube_downloaer/
-├─ youtube_downloader_gui.py   # Main GUI script
-├─ downloader.py               # Backend downloader logic
-├─ ffmpeg/                     # Bundled FFmpeg for audio/video processing
+├─ downloader.py             # Main CLI downloader script
+├─ ffmpeg/                   # Bundled FFmpeg for audio/video processing
 │   └─ bin/
 │       ├─ ffmpeg.exe
 │       └─ ffprobe.exe
-├─ downloads/                  # Folder where videos/audio are saved
-└─ README.md                   # Project documentation
+├─ downloads/                # Folder where videos/audio are saved
+└─ README.md                 # Project documentation
 ```
 
 ---
 
 ## Skills Demonstrated
 
-- Python scripting and file handling  
-- GUI development with Tkinter  
-- Handling user input and error management  
-- Working with external libraries (`yt-dlp`)  
-- Audio/video processing with FFmpeg  
-- Playlist and batch processing logic  
-- Threading for responsive GUI
+- Python scripting and file handling
+- Playlist and batch processing
+- Working with external libraries (`yt-dlp`)
+- Audio/video processing with FFmpeg
+- Command-line interface design
+- Clean, professional coding style for portfolio showcase
 
 ---
 
 ## License
 
 This project is for learning and portfolio purposes.  
-Feel free to use or modify it, but do not redistribute commercially.
-
+Feel free to use or modify it, but do not redistribute comme
