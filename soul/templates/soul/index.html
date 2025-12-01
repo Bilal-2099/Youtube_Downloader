@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Downloader Tube</title>
+</head>
+<body>
+    <h1>Welcome to Downloader Tube</h1>
+    <form method="POST" action="{% url 'download_video' %}">
+        {% csrf_token %}
+        <input type="text" name="video_url" placeholder="Enter YouTube URL">
+        <button type="submit">Download</button>
+    </form>
+</body>
+</html>
