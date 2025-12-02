@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Downloader Tube</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Base Reset & Layout */
+        :root {
+            --primary-color: #0a0a0a; /* User's chosen Black */
+            --primary-hover: #262626;
+            --accent-color: #0a0a0a; /* User's chosen Blue */
+            --bg-color: #0a0a0a;
+            --card-bg: #ffffff;
+            --text-main: #1f2937;
+            --text-muted: #6b7280;
+            --border-color: #e5e7eb;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Card Container */
+        .container {
+            background-color: var(--card-bg);
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: left; /* Aligned left for better form readability */
+        }
+
+        h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            margin-top: 0;
+            color: var(--text-main);
+            text-align: center;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        label.input-label {
+            display: block;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+        }
+
+        /* Styled Inputs & Selects */
+        .styled-input, .styled-select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.2s;
+            box-sizing: border-box;
+            background-color: #fff;
+            font-family: inherit;
+        }
+
+        .styled-input:focus, .styled-select:focus {
+            border-color: var(--accent-color);
+        }
+
+        /* Custom Checkbox Styling */
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+            cursor: pointer;
+        }
+
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            accent-color: var(--accent-color);
+            cursor: pointer;
+            margin-right: 10px;
+        }
+
+        .checkbox-label {
+            font-weight: 500;
+            color: var(--text-main);
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        /* Submit Button */
+        .download-btn {
+            width: 100%;
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+
+        .download-btn:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Loading Spinner */
+        #loading {
+            margin-top: 1.5rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 3px solid #e5e7eb;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Downloader Tube</h1>
+        
+        <form method="POST" action="{% url 'download_video' %}" onsubmit="showLoading()">
+            {% csrf_token %}
+            
+            <div class="form-group">
+                <label for="video_url" class="input-label">Video URL</label>
+                <input type="text" id="video_url" name="video_url" class="styled-input" placeholder="Paste link here..." required>
+            </div>
+            
+            <div class="form-group">
+                <label for="format" class="input-label">Select Format</label>
+                <select id="format" name="format" class="styled-select">
+                    <option value="audio">Audio (MP3)</option>
+                    <option value="video">Video (MP4)</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <div class="checkbox-group">
+                    <input type="checkbox" id="is_playlist" name="is_playlist" value="true">
+                    <label for="is_playlist" class="checkbox-label">This is a playlist</label>
+                </div>
+            </div>
+
+            <button type="submit" class="download-btn">Download</button>
+        </form>
+
+        <div id="loading" style="display: none;">
+            <div class="spinner"></div>
+            <span>Processing... please wait.</span>
+        </div>
+    </div>
+
+    <script>
+        function showLoading() {
+            document.getElementById("loading").style.display = "flex";
+        }
+    </script>
+
+</body>
+</html>

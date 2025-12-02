@@ -1,48 +1,84 @@
-from django.shortcuts import render
-from django.http import StreamingHttpResponse
-import yt_dlp
-import tempfile
 import os
+import re
+import tempfile
+import yt_dlp
+from django.http import FileResponse, HttpResponse
+from django.shortcuts import render
+from django.conf import settings
+import zipfile
 
-def home(request):
-    return render(request, "soul/index.html")
+# Path to ffmpeg folder inside your project
+FFMPEG_PATH = os.path.join(settings.BASE_DIR, "ffmpeg", "bin")
 
-def download_video(request):
-    if request.method == "POST":
-        video_url = request.POST.get("video_url")
-        if not video_url:
-            return render(request, "soul/index.html", {"error": "No URL provided."})
+def sanitize_filename(name):
+    """Remove invalid filename characters."""
+    return re.sub(r'[\\/*?:"<>|]', "", name)
 
-        try:
-            # Create a temporary file to hold the video
-            temp_file = tempfile.NamedTemporaryFile(delete=False, suffix=".mp4")
-            temp_file.close()  # We'll let yt-dlp write to it
+def download_page(request):
+    return render(request, "index.html")
 
-            # Download using yt-dlp to the temp file
-            ydl_opts = {
-                'format': 'best',
-                'outtmpl': temp_file.name
-            }
+def download(request):
+    if request.method != "POST":
+        return HttpResponse("Invalid Request")
 
-            with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-                ydl.download([video_url])
+    url = request.POST.get("video_url")
+    file_format = request.POST.get("format")   # 'video' or 'audio'
+    is_playlist = request.POST.get("is_playlist") == "true"
 
-            # Stream the file to the user
-            def file_iterator(file_path, chunk_size=8192):
-                with open(file_path, "rb") as f:
-                    while True:
-                        chunk = f.read(chunk_size)
-                        if not chunk:
-                            break
-                        yield chunk
-                os.remove(file_path)  # Clean up temp file after sending
+    # Temporary directory for downloads
+    temp_dir = tempfile.mkdtemp()
+    outtmpl = os.path.join(temp_dir, "%(title)s.%(ext)s")
 
-            filename = os.path.basename(temp_file.name)
-            response = StreamingHttpResponse(file_iterator(temp_file.name), content_type="video/mp4")
-            response['Content-Disposition'] = f'attachment; filename="video.mp4"'
-            return response
+    # Common yt-dlp options
+    ydl_opts = {
+        "outtmpl": outtmpl,
+        "ffmpeg_location": FFMPEG_PATH,
+        "quiet": True,
+    }
 
-        except Exception as e:
-            return render(request, "soul/index.html", {"error": str(e)})
+    # Format options
+    if file_format == "video":
+        ydl_opts.update({
+            "format": "bestvideo+bestaudio/best",
+            "merge_output_format": "mp4",
+        })
+    else:
+        ydl_opts.update({
+            "format": "bestaudio/best",
+            "postprocessors": [{
+                "key": "FFmpegExtractAudio",
+                "preferredcodec": "mp3",
+                "preferredquality": "192",
+            }],
+        })
 
-    return render(request, "soul/index.html")
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        if is_playlist:
+            # Extract info and download playlist
+            info_dict = ydl.extract_info(url, download=True)
+            playlist_title = sanitize_filename(info_dict.get("title", "playlist"))
+
+            # Create ZIP file with all downloaded media
+            zip_path = os.path.join(temp_dir, f"{playlist_title}.zip")
+            with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+                for f in os.listdir(temp_dir):
+                    if f.endswith(".mp4") or f.endswith(".mp3"):
+                        zipf.write(os.path.join(temp_dir, f), f)
+
+            return FileResponse(
+                open(zip_path, "rb"),
+                as_attachment=True,
+                filename=f"{playlist_title}.zip"
+            )
+        else:
+            # Single video/audio download
+            info = ydl.extract_info(url, download=True)
+            title = sanitize_filename(info.get("title", "download"))
+            ext = "mp4" if file_format == "video" else "mp3"
+            filepath = os.path.join(temp_dir, f"{title}.{ext}")
+
+            return FileResponse(
+                open(filepath, "rb"),
+                as_attachment=True,
+                filename=f"{title}.{ext}"
+            )
