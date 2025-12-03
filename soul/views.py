@@ -46,29 +46,34 @@ def download(request):
             }],
         })
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url, download=True)
+    try:
+        with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+            info = ydl.extract_info(url, download=True)
 
-        if is_playlist:
-            playlist_title = sanitize_filename(info.get("title", "playlist"))
-            zip_path = os.path.join(temp_dir, f"{playlist_title}.zip")
-            with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
-                # Add all files actually downloaded
-                for f in info.get('entries', []):
-                    file_path = ydl.prepare_filename(f)
-                    if file_format == "audio":
-                        file_path = os.path.splitext(file_path)[0] + ".mp3"
-                    zipf.write(file_path, os.path.basename(file_path))
+            if is_playlist:
+                playlist_title = sanitize_filename(info.get("title", "playlist"))
+                zip_path = os.path.join(temp_dir, f"{playlist_title}.zip")
+                with zipfile.ZipFile(zip_path, "w", zipfile.ZIP_DEFLATED) as zipf:
+                    # Loop through entries and get the actual downloaded filename
+                    for entry in info.get('entries', []):
+                        file_path = ydl.prepare_filename(entry)
+                        if file_format == "audio":
+                            file_path = os.path.splitext(file_path)[0] + ".mp3"
+                        if os.path.exists(file_path):
+                            zipf.write(file_path, os.path.basename(file_path))
+                
+                return FileResponse(open(zip_path, "rb"),
+                                    as_attachment=True,
+                                    filename=f"{playlist_title}.zip")
 
-            return FileResponse(open(zip_path, "rb"),
-                                as_attachment=True,
-                                filename=f"{playlist_title}.zip")
-        else:
-            # Single file
-            file_path = ydl.prepare_filename(info)
-            if file_format == "audio":
-                file_path = os.path.splitext(file_path)[0] + ".mp3"
+            else:
+                # Single file
+                file_path = ydl.prepare_filename(info)
+                if file_format == "audio":
+                    file_path = os.path.splitext(file_path)[0] + ".mp3"
 
-            return FileResponse(open(file_path, "rb"),
-                                as_attachment=True,
-                                filename=os.path.basename(file_path))
+                return FileResponse(open(file_path, "rb"),
+                                    as_attachment=True,
+                                    filename=os.path.basename(file_path))
+    except Exception as e:
+        return HttpResponse(f"Error: {str(e)}")
