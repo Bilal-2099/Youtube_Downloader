@@ -30,8 +30,11 @@ SECRET_KEY = 'django-insecure-z0pd7q@&$f8v%(+_wcf#@6q*yks_h8pd=sc^h^(s%&w#70o2ex
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['youtubedownloader-production-9c3e.up.railway.app']
-
+ALLOWED_HOSTS = [
+    "youtubedownloader-production-9c3e.up.railway.app",
+    "localhost",
+    "127.0.0.1",
+]
 
 # Application definition
 
