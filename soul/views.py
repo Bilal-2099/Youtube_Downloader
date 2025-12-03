@@ -1,3 +1,4 @@
+import imageio_ffmpeg as ffmpeg
 import os
 import re
 import tempfile
@@ -8,7 +9,9 @@ from django.conf import settings
 import zipfile
 
 # Path to ffmpeg folder inside your project
-FFMPEG_PATH = os.path.join(settings.BASE_DIR, "ffmpeg", "bin")
+# FFMPEG_PATH = os.path.join(settings.BASE_DIR, "ffmpeg", "bin")
+
+FFMPEG_PATH = ffmpeg.get_ffmpeg_exe()  # This gives the correct path to ffmpeg
 
 def sanitize_filename(name):
     """Remove invalid filename characters."""
