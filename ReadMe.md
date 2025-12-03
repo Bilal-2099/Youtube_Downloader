@@ -1,121 +1,114 @@
 # YouTube Downloader (CLI Version)
 
-A simple Python-based YouTube downloader for videos and audio, including full playlist support.  
-This command-line tool allows downloading single videos or entire playlists in **video (MP4)** or **audio (MP3)** format, with live progress and video title display.
+A clean and simple command-line YouTube downloader built with Python.\
+It supports videos, audio, and full playlists --- with real-time
+progress, download speed, and the current video title displayed directly
+in the terminal.
 
-Bundled **FFmpeg** ensures the app works on systems without needing a separate installation.
+FFmpeg is bundled inside the project, so no extra installation is
+required.
 
----
+------------------------------------------------------------------------
 
 ## Features
 
-- Download **single videos** or **entire playlists**
-- Choose download format: **Video (MP4)** or **Audio (MP3)**
-- Shows progress percentage, download speed, and current video title in terminal
-- Clean filenames automatically for Windows
-- Bundled FFmpeg for audio extraction and video merging
-- Simple command-line interface
+-   Download single videos or entire playlists\
+-   Choose between **Video (MP4)** or **Audio (MP3)**\
+-   Shows progress %, download speed, and current video title\
+-   Auto-clean filenames for Windows\
+-   Built-in FFmpeg for merging and audio extraction\
+-   Simple, lightweight CLI
 
----
+------------------------------------------------------------------------
 
 ## Installation
 
-1. Clone the repository:
+Clone the repository:
 
-```bash
+``` bash
 git clone https://github.com/Bilal-2099/Youtube_downloaer.git
 cd Youtube_downloaer
 ```
 
-2. Install the dependency:
+Install the required dependency:
 
-```bash
+``` bash
 pip install yt-dlp
 ```
 
-> **Note:** FFmpeg is already included in the `ffmpeg` folder, so no separate installation is needed.
+> FFmpeg is already included in the `ffmpeg` directory---no setup
+> needed.
 
----
+------------------------------------------------------------------------
 
 ## Usage
 
-Run the script:
+Run the downloader:
 
-```bash
+``` bash
 python downloader.py
 ```
 
-1. Enter the YouTube video or playlist URL.  
-2. Select the download format (`video` or `audio`).  
-3. The terminal will display download progress and the video title.
-4. The downloaded files are saved in the `downloads` folder:
+Enter: 1. A YouTube URL (video or playlist)\
+2. The format: `video` or `audio`
 
-```
-downloads/
-    video/         # For single videos
-    audio/         # For single audio
-    playlists/
-        video/     # Playlist videos
-        audio/     # Playlist audios
-```
+Downloaded files will be stored in:
 
----
+    downloads/
+        video/
+        audio/
+        playlists/
+            video/
+            audio/
 
-## Example
+------------------------------------------------------------------------
 
-**Single video (audio):**
+## Examples
 
-```
-Enter URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
-Enter format: audio
-Downloading audio...
-45% | 1.2MiB/s | Rick Astley - Never Gonna Give You Up.mp3
-Download complete!
-Saved to: downloads/audio
-```
+### Single Video → MP3
 
-**Playlist (video):**
+    Enter URL: https://www.youtube.com/watch?v=dQw4w9WgXcQ
+    Enter format: audio
+    Downloading audio...
+    45% | 1.2MiB/s | Rick Astley - Never Gonna Give You Up.mp3
+    Saved to: downloads/audio
 
-```
-Enter URL: https://www.youtube.com/playlist?list=PLxxx
-Enter format: video
-Downloading playlist...
-10% | 2.3MiB/s | Video 1.mp4
-25% | 1.8MiB/s | Video 2.mp4
-...
-Download complete!
-Saved to: downloads/playlists/video
-```
+### Playlist → MP4
 
----
+    Enter URL: https://www.youtube.com/playlist?list=PLxxx
+    Enter format: video
+    Downloading playlist...
+    10% | 2.3MiB/s | Video 1.mp4
+    27% | 1.9MiB/s | Video 2.mp4
+    Saved to: downloads/playlists/video
+
+------------------------------------------------------------------------
 
 ## Project Structure
 
-```
-Youtube_downloaer/
-├─ downloader.py             # Main CLI downloader script
-├─ ffmpeg/                   # Bundled FFmpeg for audio/video processing
-│   └─ bin/
-│       ├─ ffmpeg.exe
-│       └─ ffprobe.exe
-├─ downloads/                # Folder where videos/audio are saved
-└─ README.md                 # Project documentation
-```
+    Youtube_downloaer/
+    ├─ downloader.py
+    ├─ ffmpeg/
+    │   └─ bin/
+    │       ├─ ffmpeg.exe
+    │       └─ ffprobe.exe
+    ├─ downloads/
+    └─ README.md
 
----
+------------------------------------------------------------------------
 
 ## Skills Demonstrated
 
-- Python scripting and file handling
-- Playlist and batch processing
-- Working with external libraries (`yt-dlp`)
-- Audio/video processing with FFmpeg
-- Command-line interface design
-- Clean, professional coding style for portfolio showcase
+-   Python scripting\
+-   Batch and playlist automation\
+-   Using `yt-dlp` for media extraction\
+-   Leveraging FFmpeg inside Python\
+-   Clean command-line app structure\
+-   Portfolio-ready project organization
 
----
+------------------------------------------------------------------------
 
 ## License
 
-This project is for learning and portfolio purposes.  
-Feel free to use or modify it, but do not redistribute comme
+This project is for learning and portfolio use.\
+Feel free to modify it for personal projects.

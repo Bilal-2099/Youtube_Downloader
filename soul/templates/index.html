@@ -49,6 +49,15 @@
             color: var(--text-main);
             text-align: center;
         }
+        
+        /* New CSS selector added here for centering the credit text */
+        .credit-text {
+            text-align: center;
+            color: var(--text-muted); 
+            margin-top: -1.0rem;
+            margin-bottom: 2rem;
+            font-size: 0.9rem;
+        }
 
         /* Form Elements */
         .form-group {
@@ -151,8 +160,8 @@
 <body>
 
     <div class="container">
-        <h1>Downloader Tube</h1>
-        
+        <h1>Downloader Tube</h1> 
+        <p class="credit-text">Made by <i> Bilal</i> </p>       
         <form method="POST" action="{% url 'download_video' %}" onsubmit="showLoading()">
             {% csrf_token %}
             
