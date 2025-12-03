@@ -11,7 +11,7 @@
         :root {
             --primary-color: #0a0a0a; /* User's chosen Black */
             --primary-hover: #262626;
-            --accent-color: #0a0a0a; /* User's chosen Blue */
+            --accent-color: #0a0a0a;
             --bg-color: #0a0a0a;
             --card-bg: #ffffff;
             --text-main: #1f2937;
@@ -38,7 +38,7 @@
             box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
             width: 100%;
             max-width: 400px;
-            text-align: left; /* Aligned left for better form readability */
+            text-align: left;
         }
 
         h1 {
@@ -50,7 +50,7 @@
             text-align: center;
         }
         
-        /* New CSS selector added here for centering the credit text */
+        /* Centered Credit Text */
         .credit-text {
             text-align: center;
             color: var(--text-muted); 
@@ -88,29 +88,6 @@
 
         .styled-input:focus, .styled-select:focus {
             border-color: var(--accent-color);
-        }
-
-        /* Custom Checkbox Styling */
-        .checkbox-group {
-            display: flex;
-            align-items: center;
-            margin-top: 0.5rem;
-            cursor: pointer;
-        }
-
-        input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            accent-color: var(--accent-color);
-            cursor: pointer;
-            margin-right: 10px;
-        }
-
-        .checkbox-label {
-            font-weight: 500;
-            color: var(--text-main);
-            cursor: pointer;
-            font-size: 0.95rem;
         }
 
         /* Submit Button */
@@ -176,13 +153,6 @@
                     <option value="audio">Audio (MP3)</option>
                     <option value="video">Video (MP4)</option>
                 </select>
-            </div>
-            
-            <div class="form-group">
-                <div class="checkbox-group">
-                    <input type="checkbox" id="is_playlist" name="is_playlist" value="true">
-                    <label for="is_playlist" class="checkbox-label">This is a playlist</label>
-                </div>
             </div>
 
             <button type="submit" class="download-btn">Download</button>
