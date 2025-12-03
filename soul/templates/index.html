@@ -1,152 +1,166 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Downloader Tube</title>
+    <!-- Metadata about the page -->
+    <meta charset="UTF-8"> <!-- Character encoding for proper text display -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Makes the page responsive on mobile devices -->
+    <title>Downloader Tube</title> <!-- Page title shown on browser tab -->
+
+    <!-- Import Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-    
+
     <style>
-        /* Base Reset & Layout */
+        /* ================== BASE STYLES ================== */
         :root {
-            --primary-color: #0a0a0a; /* User's chosen Black */
-            --primary-hover: #262626;
-            --accent-color: #0a0a0a;
-            --bg-color: #0a0a0a;
-            --card-bg: #ffffff;
-            --text-main: #1f2937;
-            --text-muted: #6b7280;
-            --border-color: #e5e7eb;
+            /* Define color variables for easier reuse */
+            --primary-color: #0a0a0a; /* Main color for buttons */
+            --primary-hover: #262626; /* Button hover color */
+            --accent-color: #0a0a0a; /* Accent color for input focus */
+            --bg-color: #0a0a0a; /* Page background */
+            --card-bg: #ffffff; /* Card container background */
+            --text-main: #1f2937; /* Main text color */
+            --text-muted: #6b7280; /* Faded/secondary text */
+            --border-color: #e5e7eb; /* Borders for inputs */
         }
 
+        /* Body styling */
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
+            font-family: 'Inter', sans-serif; /* Set font */
+            background-color: var(--bg-color); /* Page background color */
+            color: var(--text-main); /* Default text color */
+            display: flex; /* Flexbox layout to center content */
+            justify-content: center; /* Horizontally center */
+            align-items: center; /* Vertically center */
+            min-height: 100vh; /* Make body take full viewport height */
+            margin: 0; /* Remove default margin */
         }
 
-        /* Card Container */
+        /* ================== CARD CONTAINER ================== */
         .container {
-            background-color: var(--card-bg);
-            padding: 2.5rem;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            width: 100%;
-            max-width: 400px;
-            text-align: left;
+            background-color: var(--card-bg); /* White card background */
+            padding: 2.5rem; /* Space inside the card */
+            border-radius: 16px; /* Rounded corners */
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1); /* Shadow for depth */
+            width: 100%; /* Full width up to max */
+            max-width: 400px; /* Max width of card */
+            text-align: left; /* Align text inside */
         }
 
+        /* Heading style */
         h1 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            margin-top: 0;
-            color: var(--text-main);
-            text-align: center;
+            font-size: 1.5rem; /* Large text */
+            font-weight: 600; /* Bold */
+            margin-bottom: 1.5rem; /* Space below heading */
+            margin-top: 0; /* No top margin */
+            color: var(--text-main); /* Dark text */
+            text-align: center; /* Center heading */
         }
-        
-        /* Centered Credit Text */
+
+        /* Credit text below heading */
         .credit-text {
-            text-align: center;
-            color: var(--text-muted); 
-            margin-top: -1.0rem;
-            margin-bottom: 2rem;
-            font-size: 0.9rem;
+            text-align: center; /* Center text */
+            color: var(--text-muted); /* Gray color */
+            margin-top: -1.0rem; /* Adjust spacing above */
+            margin-bottom: 2rem; /* Space below */
+            font-size: 0.9rem; /* Slightly smaller font */
         }
 
-        /* Form Elements */
+        /* ================== FORM ELEMENTS ================== */
         .form-group {
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.25rem; /* Space between form fields */
         }
 
+        /* Labels for inputs */
         label.input-label {
-            display: block;
-            font-weight: 600;
-            font-size: 0.9rem;
-            margin-bottom: 0.5rem;
-            color: var(--text-main);
+            display: block; /* Make label on its own line */
+            font-weight: 600; /* Bold text */
+            font-size: 0.9rem; /* Slightly smaller text */
+            margin-bottom: 0.5rem; /* Space below label */
+            color: var(--text-main); /* Dark text */
         }
 
-        /* Styled Inputs & Selects */
+        /* Inputs and selects */
         .styled-input, .styled-select {
-            width: 100%;
-            padding: 0.75rem 1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 8px;
-            font-size: 1rem;
-            outline: none;
-            transition: border-color 0.2s;
-            box-sizing: border-box;
-            background-color: #fff;
-            font-family: inherit;
+            width: 100%; /* Take full width */
+            padding: 0.75rem 1rem; /* Add padding inside */
+            border: 2px solid var(--border-color); /* Light border */
+            border-radius: 8px; /* Rounded corners */
+            font-size: 1rem; /* Normal font size */
+            outline: none; /* Remove default focus outline */
+            transition: border-color 0.2s; /* Smooth color transition */
+            box-sizing: border-box; /* Include padding in width */
+            background-color: #fff; /* White background for inputs */
+            font-family: inherit; /* Same font as page */
         }
 
+        /* Change border color on focus */
         .styled-input:focus, .styled-select:focus {
             border-color: var(--accent-color);
         }
 
-        /* Submit Button */
+        /* ================== BUTTON ================== */
         .download-btn {
-            width: 100%;
-            background-color: var(--primary-color);
-            color: white;
-            padding: 0.875rem;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: background-color 0.2s;
-            margin-top: 1rem;
+            width: 100%; /* Full width button */
+            background-color: var(--primary-color); /* Main button color */
+            color: white; /* Text color */
+            padding: 0.875rem; /* Space inside button */
+            border: none; /* Remove border */
+            border-radius: 8px; /* Rounded corners */
+            font-size: 1rem; /* Font size */
+            font-weight: 600; /* Bold text */
+            cursor: pointer; /* Pointer on hover */
+            transition: background-color 0.2s; /* Smooth hover effect */
+            margin-top: 1rem; /* Space above button */
         }
 
         .download-btn:hover {
-            background-color: var(--primary-hover);
+            background-color: var(--primary-hover); /* Darker on hover */
         }
 
-        /* Loading Spinner */
+        /* ================== LOADING SPINNER ================== */
         #loading {
-            margin-top: 1.5rem;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            display: none;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
+            margin-top: 1.5rem; /* Space above spinner */
+            color: var(--text-muted); /* Gray text */
+            font-size: 0.9rem; /* Smaller text */
+            display: none; /* Hidden by default */
+            align-items: center; /* Center items vertically */
+            justify-content: center; /* Center items horizontally */
+            gap: 8px; /* Space between spinner and text */
         }
 
+        /* Spinner animation */
         .spinner {
-            width: 20px;
+            width: 20px; /* Size of spinner */
             height: 20px;
-            border: 3px solid #e5e7eb;
-            border-top-color: var(--primary-color);
-            border-radius: 50%;
-            animation: spin 0.8s linear infinite;
+            border: 3px solid #e5e7eb; /* Light gray border */
+            border-top-color: var(--primary-color); /* Top color for rotation effect */
+            border-radius: 50%; /* Circular shape */
+            animation: spin 0.8s linear infinite; /* Continuous rotation */
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to { transform: rotate(360deg); } /* Rotate full circle */
         }
     </style>
 </head>
 <body>
 
+    <!-- Main card container -->
     <div class="container">
         <h1>Downloader Tube</h1> 
-        <p class="credit-text">Made by <i> Bilal</i> </p>       
+        <p class="credit-text">Made by <i> Bilal</i> </p> <!-- Credit text -->
+
+        <!-- Form to submit video URL and format -->
         <form method="POST" action="{% url 'download_video' %}" onsubmit="showLoading()">
-            {% csrf_token %}
-            
+            {% csrf_token %} <!-- CSRF token for security -->
+
+            <!-- Video URL input field -->
             <div class="form-group">
                 <label for="video_url" class="input-label">Video URL</label>
                 <input type="text" id="video_url" name="video_url" class="styled-input" placeholder="Paste link here..." required>
             </div>
             
+            <!-- Format selection dropdown -->
             <div class="form-group">
                 <label for="format" class="input-label">Select Format</label>
                 <select id="format" name="format" class="styled-select">
@@ -155,9 +169,11 @@
                 </select>
             </div>
 
+            <!-- Submit button -->
             <button type="submit" class="download-btn">Download</button>
         </form>
 
+        <!-- Loading spinner shown while processing -->
         <div id="loading" style="display: none;">
             <div class="spinner"></div>
             <span>Processing... please wait.</span>
@@ -165,6 +181,7 @@
     </div>
 
     <script>
+        // Function to show loading spinner when form is submitted
         function showLoading() {
             document.getElementById("loading").style.display = "flex";
         }
